@@ -5327,3 +5327,4 @@ body {
 img {
 	max-width: 100%;
 }
+#one .inner { outline: 4px dashed red !important; }
