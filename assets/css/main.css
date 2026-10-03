@@ -5257,3 +5257,25 @@ body.privacy-page {
 		aspect-ratio: 4 / 5;
 	}
 }
+
+/* 4. Overflow guard: stops anything wider than the screen (the page
+      background layer, wave pseudo-elements, shifted images) from causing
+      sideways scrolling or making the mobile browser zoom out.
+      Set on both html and body -- iOS Safari often ignores it on body alone. */
+html,
+body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* The page fills the screen but never wider. */
+@media screen and (max-width: 980px) {
+	#page-wrapper {
+		width: 100%;
+		overflow-x: clip;
+	}
+}
