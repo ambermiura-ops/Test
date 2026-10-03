@@ -5276,6 +5276,29 @@ body.privacy-page {
 	}
 }
 
+
+/* 5. THE ROOT CAUSE OF THE "TOO WIDE" PAGE: the "Let's Connect -- Free 15 Minute
+      Consultation" button (#four) is white-space: nowrap with a fixed 3.75em
+      height, so on a phone it is wider than the screen (416px on a 390px
+      phone). The whole page then becomes wider than the screen, and mobile
+      browsers shrink/shift everything -- which looks like a too-wide background
+      with the page "hovering" over it. Let buttons wrap instead. */
+.button,
+a.button {
+	white-space: normal;
+	max-width: 100%;
+}
+
+@media screen and (max-width: 736px) {
+	.button,
+	a.button {
+		height: auto;
+		line-height: 1.5;
+		padding: 1em 1.5em;
+		text-align: center;
+	}
+}
+
 /* 4. Overflow guard */
 html,
 body {
