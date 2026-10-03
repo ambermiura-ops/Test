@@ -5299,6 +5299,24 @@ a.button {
 	}
 }
 
+
+/* 6. Space below the Welcome card so the wave at the top of the About
+      section doesn't cut across it. #one .inner only has 0.1em of bottom
+      padding and #one's bottom margin is forced to 0, while the About
+      section's wave extends upward into #one (2.5em on phones, 4.75em on
+      tablets). Padding must be larger than the wave. */
+@media screen and (max-width: 980px) {
+	#one .inner {
+		padding-bottom: 6em;
+	}
+}
+
+@media screen and (max-width: 736px) {
+	#one .inner {
+		padding-bottom: 4em;
+	}
+}
+
 /* 4. Overflow guard */
 html,
 body {
@@ -5308,11 +5326,4 @@ body {
 
 img {
 	max-width: 100%;
-}
-@media screen and (max-width: 980px) {
-	#one .inner { padding-bottom: 6em; }
-}
-
-@media screen and (max-width: 736px) {
-	#one .inner { padding-bottom: 4em; }
 }
