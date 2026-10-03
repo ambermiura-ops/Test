@@ -5309,3 +5309,10 @@ body {
 img {
 	max-width: 100%;
 }
+@media screen and (max-width: 980px) {
+	#one .inner { padding-bottom: 6em; }
+}
+
+@media screen and (max-width: 736px) {
+	#one .inner { padding-bottom: 4em; }
+}
