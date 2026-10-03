@@ -5161,3 +5161,71 @@ body.privacy-page {
 	background-attachment: fixed;
 	background-position: center;
 }
+/* ============================================================
+   MOBILE FIXES -- paste at the very END of assets/css/main.css
+   (must come after everything else so it wins on specificity/order)
+   ============================================================ */
+
+/* 1. iOS Safari ignores background-attachment: fixed, which makes
+      the page background and the Section 3 photo render zoomed/blown up.
+      The same property also appears further down this file for other
+      pages' sections (around lines 4881-5161) -- add those selectors here. */
+@media screen and (max-width: 980px), (hover: none) {
+	body,
+	#three.wrapper {
+		background-attachment: scroll !important;
+	}
+}
+
+/* 2. Header (phones).
+      #header:not(.alt) has higher specificity than the plain #header in the
+      existing 736px block, so the header stayed 5.5em tall while #menu
+      assumed 3.5em. Target both states explicitly. */
+@media screen and (max-width: 736px) {
+	#header:not(.alt),
+	#header.alt {
+		height: 3.5em;
+		padding: 0 0.75em;
+		gap: 0.5em;
+	}
+
+	/* The inline scroll script fades the header out after 100px and it only
+	   comes back on :hover -- touch screens have no hover, so the Menu button
+	   and phone number become unreachable. Keep it visible on phones. */
+	#header.hide,
+	#header.alt.hide {
+		opacity: 1 !important;
+		pointer-events: auto !important;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	/* Phone number is nowrap at 1.6em; too wide next to the logo + Menu. */
+	#header nav .header-phone {
+		font-size: 1.1em;
+	}
+}
+
+/* 3. Section One (Welcome card + photo). */
+@media screen and (max-width: 736px) {
+	#one .inner {
+		transform: none;      /* the -4.5em lift overlaps the banner on phones */
+		padding-top: 2em;
+	}
+
+	#one .content {
+		max-height: none;     /* 400px cap makes the text spill out of the card */
+		max-width: 100%;
+	}
+
+	#one .image {
+		width: 100%;
+		max-width: 400px;
+	}
+
+	#one .image img {
+		width: 100%;          /* was fixed 400px x 500px */
+		height: auto;
+		aspect-ratio: 4 / 5;
+	}
+}
