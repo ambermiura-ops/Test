@@ -5170,10 +5170,38 @@ body.privacy-page {
       the page background and the Section 3 photo render zoomed/blown up.
       The same property also appears further down this file for other
       pages' sections (around lines 4881-5161) -- add those selectors here. */
+/* The original body rule says `background-size: auto, cover` but there is
+   only ONE image, so the browser uses `auto` (native size) -- that's why
+   the background looks far too wide on phones. Same bug on #banner.
+   Fix: draw the background on a screen-sized fixed layer with `cover`.
+   (A position: fixed layer works on iOS, unlike background-attachment.) */
 @media screen and (max-width: 980px), (hover: none) {
-	body,
+	body {
+		background-image: none !important;
+		background-color: #2e3141;
+	}
+
+	body::before {
+		content: '';
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+		background: #2e3141 url("../../images/bg.jpg") center / cover no-repeat;
+	}
+
 	#three.wrapper {
 		background-attachment: scroll !important;
+	}
+}
+
+/* Banner (applies at <=1280px): same two-value size bug. */
+@media screen and (max-width: 1280px) {
+	#banner {
+		background-size: cover !important;
+		background-repeat: no-repeat;
 	}
 }
 
