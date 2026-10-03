@@ -5300,3 +5300,147 @@ img {
 		background-attachment: scroll !important;
 	}
 }
+/* ============================================================
+   MOBILE FIXES -- paste at the very END of assets/css/main.css
+   (must come after everything else so it wins on specificity/order)
+   ============================================================ */
+
+/* 1. iOS Safari ignores background-attachment: fixed, which makes
+      the page background and the Section 3 photo render zoomed/blown up.
+      The same property also appears further down this file for other
+      pages' sections (around lines 4881-5161) -- add those selectors here. */
+/* The original body rule says `background-size: auto, cover` but there is
+   only ONE image, so the browser uses `auto` (native size) -- that's why
+   the background looks far too wide on phones. Same bug on #banner.
+   Fix: draw the background on a screen-sized fixed layer with `cover`.
+   (A position: fixed layer works on iOS, unlike background-attachment.) */
+@media screen and (max-width: 980px), (hover: none) {
+	body {
+		background-image: none !important;
+		background-color: #2e3141;
+	}
+
+	body::before {
+		content: '';
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+		background: #2e3141 url("../../images/bg.jpg") center / cover no-repeat;
+	}
+
+	#three.wrapper {
+		background-attachment: scroll !important;
+	}
+}
+
+/* Banner (applies at <=1280px): same two-value size bug. */
+@media screen and (max-width: 1280px) {
+	#banner {
+		background-size: cover !important;
+		background-repeat: no-repeat;
+	}
+}
+
+/* 2. Header (phones).
+      #header:not(.alt) has higher specificity than the plain #header in the
+      existing 736px block, so the header stayed 5.5em tall while #menu
+      assumed 3.5em. Target both states explicitly. */
+@media screen and (max-width: 736px) {
+	#header:not(.alt),
+	#header.alt {
+		height: 3.5em;
+		padding: 0 0.75em;
+		gap: 0.5em;
+	}
+
+	/* The inline scroll script fades the header out after 100px and it only
+	   comes back on :hover -- touch screens have no hover, so the Menu button
+	   and phone number become unreachable. Keep it visible on phones. */
+	#header.hide,
+	#header.alt.hide {
+		opacity: 1 !important;
+		pointer-events: auto !important;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	/* Phone number is nowrap at 1.6em; too wide next to the logo + Menu. */
+	#header nav .header-phone {
+		font-size: 1.1em;
+	}
+}
+
+/* 3. Section One (Welcome card + photo). */
+@media screen and (max-width: 736px) {
+	#one .inner {
+		transform: none;      /* the -4.5em lift overlaps the banner on phones */
+		padding-top: 2em;
+	}
+
+	#one .content {
+		max-height: none;     /* 400px cap makes the text spill out of the card */
+		max-width: 100%;
+	}
+
+	#one .image {
+		width: 100%;
+		max-width: 400px;
+	}
+
+	#one .image img {
+		width: 100%;          /* was fixed 400px x 500px */
+		height: auto;
+		aspect-ratio: 4 / 5;
+	}
+}
+
+/* 4. Overflow guard: stops anything wider than the screen (the page
+      background layer, wave pseudo-elements, shifted images) from causing
+      sideways scrolling or making the mobile browser zoom out.
+      Set on both html and body -- iOS Safari often ignores it on body alone. */
+html,
+body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+img {
+	max-width: 100%;
+}
+
+/* The page fills the screen but never wider. */
+@media screen and (max-width: 980px) {
+	#page-wrapper {
+		width: 100%;
+		overflow-x: clip;
+	}
+}
+
+/* 5. "About Amber Miura Counseling" (#two) text running off the section.
+      The template sets .wrapper.spotlight .content { width: 300% } for the
+      side-by-side desktop layout. At <=480px the layout switches to a
+      stacked block, but that 300% is never reset -- so the text column
+      becomes ~3x the screen width and runs off the right edge. */
+@media screen and (max-width: 736px) {
+	.wrapper.spotlight .content {
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+	}
+
+	/* #two's custom waves are forced to 6.5em tall, while the template
+	   shrinks them to 2.5em on phones. The extra height overlaps ~4em of the
+	   section, and #two has no bottom padding, so the last lines of text
+	   land on the curved edge. Match the template's phone size and add room. */
+	#two.wrapper::before,
+	#two.wrapper::after {
+		height: 2.5em;
+	}
+
+	#two .inner {
+		padding-bottom: 2.5em;
+	}
+}
