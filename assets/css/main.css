@@ -5279,3 +5279,24 @@ img {
 		overflow-x: clip;
 	}
 }
+/* ============================================================
+   OPTION B -- background fits the screen WIDTH and scrolls with the
+   page (no fixed layer, so the content no longer "hovers" over it).
+
+   Use this INSTEAD of section 1's body / body::before rules in
+   mobile-fixes.css. Paste it at the very end of main.css.
+   ============================================================ */
+@media screen and (max-width: 980px), (hover: none) {
+	body::before {
+		display: none;                 /* turn off the fixed layer */
+	}
+
+	body {
+		background-color: #2e3141;     /* fills anything the image doesn't cover */
+		background-image: url("../../images/bg.jpg") !important;
+		background-repeat: repeat-y;   /* tiles down the page if it's taller than the image */
+		background-size: 100% auto;    /* exactly the screen width, nothing cut off sideways */
+		background-position: top center;
+		background-attachment: scroll !important;
+	}
+}
