@@ -5411,16 +5411,3 @@ body {
 img {
 	max-width: 100%;
 }
-/* Mobile backgrounds for the inner pages: centered, not repeated, not zoomed. */
-@media screen and (max-width: 980px), (hover: none) {
-	body.meet-amber-page,
-	body.services-page,
-	body.faq-page,
-	body.privacy-page {
-		background-size: 100% auto;
-		background-position: 50% 50%;
-		background-repeat: no-repeat;
-		background-attachment: scroll;
-		background-color: #2e3141;
-	}
-}
