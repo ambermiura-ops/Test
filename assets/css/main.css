@@ -5319,6 +5319,88 @@ a.button {
 	}
 }
 
+
+/* 7. Footer covering the bottom of the Services / FAQ / Privacy content.
+      ROOT CAUSE: main.css has `padding: -1.5em 1.5em 6em 1.5em` on #services,
+      #faq and #privacy. Negative padding is invalid CSS, so the browser throws
+      out that whole line -- no side padding and no 6em bottom padding. Meanwhile
+      #footer is pulled UP over the previous section (margin-top -6.5em at
+      <=1280px, -4.75em at <=980px, -2.5em at <=736px), so it sits on top of the
+      last lines of content. Give each section valid padding larger than that
+      overlap. (#bio is included because its 6em is slightly less than 6.5em.) */
+#services,
+#faq,
+#privacy,
+#bio {
+	padding: 0 1.5em 3em 1.5em;
+}
+
+@media screen and (max-width: 1280px) {
+	#services,
+	#faq,
+	#privacy,
+	#bio {
+		padding-bottom: 9em;
+	}
+}
+
+@media screen and (max-width: 980px) {
+	#services,
+	#faq,
+	#privacy,
+	#bio {
+		padding-bottom: 7.5em;
+	}
+}
+
+@media screen and (max-width: 736px) {
+	#services,
+	#faq,
+	#privacy,
+	#bio {
+		padding-bottom: 4.5em;
+	}
+}
+
+/* 8. Footer logo centered whenever the footer stacks (<=980px), and a shorter
+      footer on phones. */
+@media screen and (max-width: 980px) {
+	#footer .inner .footer-logo {
+		justify-content: center;
+		text-align: center;
+	}
+
+	#footer .inner .footer-logo img {
+		margin: 0 auto;
+	}
+}
+
+@media screen and (max-width: 736px) {
+	#footer .inner {
+		padding: 1.25em 1.5em 0.1em 1.5em;
+	}
+
+	#footer .inner .footer-col {
+		margin: 0 0 1em 0;
+	}
+
+	#footer .inner .footer-logo {
+		margin: 0 0 0.75em 0;
+	}
+
+	#footer .inner .footer-logo img {
+		max-height: 80px;
+	}
+
+	#footer .inner .contact {
+		margin: 0 0 0.5em 0;
+	}
+
+	#footer .inner .copyright {
+		margin: 0.75em 0 0.5em 0;
+	}
+}
+
 /* 4. Overflow guard */
 html,
 body {
