@@ -5162,34 +5162,23 @@ body.privacy-page {
 	background-position: center;
 }
 /* ============================================================
-   MOBILE FIXES -- paste at the very END of assets/css/main.css
-   (must come after everything else so it wins on specificity/order)
+   MOBILE FIXES (FINAL, SELF-CONTAINED)
+   Delete every earlier block you pasted from mobile-fixes.css and
+   mobile-bg-option-b.css, then paste THIS at the very end of
+   assets/css/main.css (it must go inside that file, not in index.html).
    ============================================================ */
 
-/* 1. iOS Safari ignores background-attachment: fixed, which makes
-      the page background and the Section 3 photo render zoomed/blown up.
-      The same property also appears further down this file for other
-      pages' sections (around lines 4881-5161) -- add those selectors here. */
-/* The original body rule says `background-size: auto, cover` but there is
-   only ONE image, so the browser uses `auto` (native size) -- that's why
-   the background looks far too wide on phones. Same bug on #banner.
-   Fix: draw the background on a screen-sized fixed layer with `cover`.
-   (A position: fixed layer works on iOS, unlike background-attachment.) */
+/* 1. Background on phones: show bg.jpg at the full SCREEN WIDTH (nothing
+      cropped, so no zoom) and let it scroll with the page.
+      This only changes how your original body background is sized -- it does
+      not repeat the image path, so it can't fail to load. Keep the original
+      `body { background-image: url(...bg.jpg) }` rule in main.css as it is. */
 @media screen and (max-width: 980px), (hover: none) {
 	body {
-		background-image: none !important;
-		background-color: #2e3141;
-	}
-
-	body::before {
-		content: '';
-		position: fixed;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: -1;
-		background: #2e3141 url("../../images/bg.jpg") center / cover no-repeat;
+		background-size: 100% auto;
+		background-position: center top;
+		background-repeat: repeat-y;
+		background-attachment: scroll;
 	}
 
 	#three.wrapper {
@@ -5197,18 +5186,15 @@ body.privacy-page {
 	}
 }
 
-/* Banner (applies at <=1280px): same two-value size bug. */
 @media screen and (max-width: 1280px) {
 	#banner {
-		background-size: cover !important;
+		background-size: cover;
+		background-position: center;
 		background-repeat: no-repeat;
 	}
 }
 
-/* 2. Header (phones).
-      #header:not(.alt) has higher specificity than the plain #header in the
-      existing 736px block, so the header stayed 5.5em tall while #menu
-      assumed 3.5em. Target both states explicitly. */
+/* 2. Header on phones */
 @media screen and (max-width: 736px) {
 	#header:not(.alt),
 	#header.alt {
@@ -5217,9 +5203,8 @@ body.privacy-page {
 		gap: 0.5em;
 	}
 
-	/* The inline scroll script fades the header out after 100px and it only
-	   comes back on :hover -- touch screens have no hover, so the Menu button
-	   and phone number become unreachable. Keep it visible on phones. */
+	/* Touch screens have no :hover, so the fade-out on scroll would make the
+	   Menu button and phone number unreachable. */
 	#header.hide,
 	#header.alt.hide {
 		opacity: 1 !important;
@@ -5228,32 +5213,119 @@ body.privacy-page {
 }
 
 @media screen and (max-width: 480px) {
-	/* Phone number is nowrap at 1.6em; too wide next to the logo + Menu. */
 	#header nav .header-phone {
 		font-size: 1.1em;
 	}
 }
 
-/* 3. Section One (Welcome card + photo). */
+/* 3. Welcome (#one) and About (#two): stack image above text on phones.
+      The template gives .content width: 300% for the side-by-side desktop
+      layout; at <=480px it never resets it, so text runs ~3x past the screen
+      and never wraps. Stacking + width: 100% + !important fixes that. */
 @media screen and (max-width: 736px) {
+	#one .inner,
+	#two .inner {
+		display: block !important;
+	}
+
 	#one .inner {
-		transform: none;      /* the -4.5em lift overlaps the banner on phones */
+		transform: none;
 		padding-top: 2em;
 	}
 
-	#one .content {
-		max-height: none;     /* 400px cap makes the text spill out of the card */
-		max-width: 100%;
-	}
-
-	#one .image {
+	#one .image,
+	#two .image {
+		display: block;
 		width: 100%;
 		max-width: 400px;
+		margin: 0 0 1.5em 0 !important;
+		transform: none;
 	}
 
 	#one .image img {
-		width: 100%;          /* was fixed 400px x 500px */
+		width: 100%;
 		height: auto;
 		aspect-ratio: 4 / 5;
 	}
+
+	#one .content,
+	#two .content {
+		width: 100% !important;
+		max-width: 100% !important;
+		min-width: 0 !important;
+		max-height: none !important;
+		box-sizing: border-box;
+	}
+
+	#one .content p,
+	#two .content p,
+	#one .content h2,
+	#two .content h2 {
+		white-space: normal !important;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+	}
+
+	/* #two's waves were forced to 6.5em while the template uses 2.5em on
+	   phones, overlapping the last lines of text. */
+	#two.wrapper::before,
+	#two.wrapper::after {
+		height: 2.5em;
+	}
+
+	#two .inner {
+		padding-bottom: 2.5em;
+	}
+}
+
+
+/* 5. THE ROOT CAUSE OF THE "TOO WIDE" PAGE: the "Let's Connect -- Free 15 Minute
+      Consultation" button (#four) is white-space: nowrap with a fixed 3.75em
+      height, so on a phone it is wider than the screen (416px on a 390px
+      phone). The whole page then becomes wider than the screen, and mobile
+      browsers shrink/shift everything -- which looks like a too-wide background
+      with the page "hovering" over it. Let buttons wrap instead. */
+.button,
+a.button {
+	white-space: normal;
+	max-width: 100%;
+}
+
+@media screen and (max-width: 736px) {
+	.button,
+	a.button {
+		height: auto;
+		line-height: 1.5;
+		padding: 1em 1.5em;
+		text-align: center;
+	}
+}
+
+
+/* 6. Space below the Welcome card so the wave at the top of the About
+      section doesn't cut across it. #one .inner only has 0.1em of bottom
+      padding and #one's bottom margin is forced to 0, while the About
+      section's wave extends upward into #one (2.5em on phones, 4.75em on
+      tablets). Padding must be larger than the wave. */
+@media screen and (max-width: 980px) {
+	#one .inner {
+		padding-bottom: 6em;
+	}
+}
+
+@media screen and (max-width: 736px) {
+	#one .inner {
+		padding-bottom: 4em;
+	}
+}
+
+/* 4. Overflow guard */
+html,
+body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+img {
+	max-width: 100%;
 }
