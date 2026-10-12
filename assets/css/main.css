@@ -5444,3 +5444,21 @@ img {
 	body.faq-page::before        { background-image: url("../../images/bg4.jpg"); }
 	body.privacy-page::before    { background-image: url("../../images/bg5.jpg"); }
 }
+/* Services, FAQ and Privacy on phones/tablets: use the full width. */
+@media screen and (max-width: 980px) {
+	#services .services-image,
+	#services .services-content,
+	#faq .faq-image,
+	#faq .faq-content,
+	#privacy .privacy-image,
+	#privacy .privacy-content {
+		width: 100%;
+	}
+
+	#services,
+	#faq,
+	#privacy {
+		padding-left: 1.25em;
+		padding-right: 1.25em;
+	}
+}
