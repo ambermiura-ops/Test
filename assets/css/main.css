@@ -3222,7 +3222,7 @@ input, select, textarea {
 			#header nav a[href="#menu"] {
 				width: 4em;
 				white-space: nowrap;
-				text-indent: 4em;
+				text-indent: 3.5em;
 				position: relative;
 			}
 
