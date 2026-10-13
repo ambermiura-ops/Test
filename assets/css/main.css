@@ -5462,3 +5462,19 @@ img {
 		padding-right: 1.25em;
 	}
 }
+/* Home page, Welcome section on small phones: text first, image second. */
+@media screen and (max-width: 480px) {
+	#one .inner {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: stretch;
+	}
+
+	#one .content {
+		width: 100%;
+	}
+
+	#one .image {
+		margin: 1em 0 0 0 !important;
+	}
+}
