@@ -5225,9 +5225,7 @@ body.privacy-page {
 @media screen and (max-width: 736px) {
 	#one .inner,
 	#two .inner {
-		display: flex !important;
-		flex-direction: column;
-		align-items: stretch;
+		display: block !important;
 	}
 
 	#one .inner {
@@ -5466,26 +5464,5 @@ img {
 	#privacy {
 		padding-left: 1.25em;
 		padding-right: 1.25em;
-	}
-}
-
-	}
-}
-/* Welcome section on phones/tablets: wave stays above the card,
-   and there's a set gap between the text card and the photo. */
-@media screen and (max-width: 980px) {
-	#one.wrapper::before {
-		height: 4.75em;
-	}
-}
-@media screen and (max-width: 736px) {
-	#one .inner {
-		display: flex !important;
-		flex-direction: column-reverse !important;
-		align-items: stretch !important;
-	}
-
-	#one .image {
-		margin: 1.5em 0 0 0 !important;
 	}
 }
