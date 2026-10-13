@@ -5225,7 +5225,13 @@ body.privacy-page {
 @media screen and (max-width: 736px) {
 	#one .inner,
 	#two .inner {
-		display: block !important;
+		display: flex !important;
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	#one .inner {
+		flex-direction: column-reverse;
 	}
 
 	#one .inner {
@@ -5462,19 +5468,6 @@ img {
 		padding-right: 1.25em;
 	}
 }
-/* Home page, Welcome section on small phones: text first, image second. */
-@media screen and (max-width: 480px) {
-	#one .inner {
-		display: flex;
-		flex-direction: column-reverse;
-		align-items: stretch;
-	}
 
-	#one .content {
-		width: 100%;
-	}
-
-	#one .image {
-		margin: 1em 0 0 0 !important;
 	}
 }
