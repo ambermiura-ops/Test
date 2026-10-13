@@ -5471,3 +5471,14 @@ img {
 
 	}
 }
+@media screen and (max-width: 736px) {
+	#one .inner {
+		display: flex !important;
+		flex-direction: column-reverse !important;
+		align-items: stretch !important;
+	}
+
+	#one .image {
+		margin: 1.5em 0 0 0 !important;
+	}
+}
