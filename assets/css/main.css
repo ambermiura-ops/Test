@@ -5478,20 +5478,14 @@ img {
 		height: 4.75em;
 	}
 }
-
 @media screen and (max-width: 736px) {
-	#one.wrapper::before {
-		height: 2.5em;
-	}
-
 	#one .inner {
 		display: flex !important;
 		flex-direction: column-reverse !important;
 		align-items: stretch !important;
-		row-gap: 1.5em;
 	}
 
 	#one .image {
-		margin: 0 !important;
+		margin: 1.5em 0 0 0 !important;
 	}
 }
