@@ -3529,7 +3529,7 @@ input, select, textarea {
 			font-size: 0.8em;
 			line-height: 1.6; /* Comfortable reading spacing for description text */
 		}
-
+}
 		body.is-preload #banner .logo {
 			-moz-transform: translateY(0.5em);
 			-webkit-transform: translateY(0.5em);
