@@ -3508,7 +3508,7 @@ input, select, textarea {
 		@media screen and (max-width: 736px) {
 
 			#banner {
-				padding: 5em 2em 4.25em 2em ;
+				padding: 7em 2em 2em 2em ;
 				margin-bottom: -2.5em;
 			}
 
@@ -3521,13 +3521,13 @@ input, select, textarea {
 					}
 
 				#banner h2 {
-					font-size: 1.5em;
-				}
+			font-size: 3em;
+			line-height: .9; /* Tighter line height for large heading text */
+		}
 
-				#banner p {
-					font-size: 0.8em;
-				}
-
+		#banner p {
+			font-size: 0.8em;
+			line-height: 1.6; /* Comfortable reading spacing for description text */
 		}
 
 		body.is-preload #banner .logo {
